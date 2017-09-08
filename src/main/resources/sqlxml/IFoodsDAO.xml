@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spider.dao.IFoodsDAO">
+  <resultMap id="BaseResultMap" type="spider.entity.Foods">
+    <id column="food_id" jdbcType="INTEGER" property="foodId" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="calorie" jdbcType="DECIMAL" property="calorie" />
+    <result column="recommended" jdbcType="SMALLINT" property="recommended" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="nutrition_carbohydrate" jdbcType="DECIMAL" property="nutritionCarbohydrate" />
+    <result column="nutrition_fat" jdbcType="DECIMAL" property="nutritionFat" />
+    <result column="nutrition_protein" jdbcType="DECIMAL" property="nutritionProtein" />
+    <result column="nutrition_fibre" jdbcType="DECIMAL" property="nutritionFibre" />
+    <result column="nutrition_vitamin_a" jdbcType="DECIMAL" property="nutritionVitaminA" />
+    <result column="nutrition_vitamin_c" jdbcType="DECIMAL" property="nutritionVitaminC" />
+    <result column="nutrition_vitamin_e" jdbcType="DECIMAL" property="nutritionVitaminE" />
+    <result column="nutrition_carotene" jdbcType="DECIMAL" property="nutritionCarotene" />
+    <result column="nutrition_thiamine" jdbcType="DECIMAL" property="nutritionThiamine" />
+    <result column="nutrition_riboflavin" jdbcType="DECIMAL" property="nutritionRiboflavin" />
+    <result column="nutrition_niacin" jdbcType="DECIMAL" property="nutritionNiacin" />
+    <result column="nutrition_cholesterol" jdbcType="DECIMAL" property="nutritionCholesterol" />
+    <result column="nutrition_magnesium" jdbcType="DECIMAL" property="nutritionMagnesium" />
+    <result column="nutrition_calcium" jdbcType="DECIMAL" property="nutritionCalcium" />
+    <result column="nutrition_iron" jdbcType="DECIMAL" property="nutritionIron" />
+    <result column="nutrition_zinc" jdbcType="DECIMAL" property="nutritionZinc" />
+    <result column="nutrition_copper" jdbcType="DECIMAL" property="nutritionCopper" />
+    <result column="nutrition_manganese" jdbcType="DECIMAL" property="nutritionManganese" />
+    <result column="nutrition_potassium" jdbcType="DECIMAL" property="nutritionPotassium" />
+    <result column="nutrition_phosphorus" jdbcType="DECIMAL" property="nutritionPhosphorus" />
+    <result column="nutrition_sodium" jdbcType="DECIMAL" property="nutritionSodium" />
+    <result column="nutrition_selenium" jdbcType="DECIMAL" property="nutritionSelenium" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    food_id, category, name, calorie, recommended, comment, nutrition_carbohydrate, nutrition_fat, 
+    nutrition_protein, nutrition_fibre, nutrition_vitamin_a, nutrition_vitamin_c, nutrition_vitamin_e, 
+    nutrition_carotene, nutrition_thiamine, nutrition_riboflavin, nutrition_niacin, nutrition_cholesterol, 
+    nutrition_magnesium, nutrition_calcium, nutrition_iron, nutrition_zinc, nutrition_copper, 
+    nutrition_manganese, nutrition_potassium, nutrition_phosphorus, nutrition_sodium, 
+    nutrition_selenium
+  </sql>
+  <select id="selectByExample" parameterType="spider.entity.FoodsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from foods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from foods
+    where food_id = #{foodId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from foods
+    where food_id = #{foodId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="spider.entity.FoodsExample">
+    delete from foods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="spider.entity.Foods">
+    <selectKey keyProperty="foodId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into foods (category, name, calorie, 
+      recommended, comment, nutrition_carbohydrate, 
+      nutrition_fat, nutrition_protein, nutrition_fibre, 
+      nutrition_vitamin_a, nutrition_vitamin_c, nutrition_vitamin_e, 
+      nutrition_carotene, nutrition_thiamine, nutrition_riboflavin, 
+      nutrition_niacin, nutrition_cholesterol, 
+      nutrition_magnesium, nutrition_calcium, nutrition_iron, 
+      nutrition_zinc, nutrition_copper, nutrition_manganese, 
+      nutrition_potassium, nutrition_phosphorus, 
+      nutrition_sodium, nutrition_selenium)
+    values (#{category,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{calorie,jdbcType=DECIMAL}, 
+      #{recommended,jdbcType=SMALLINT}, #{comment,jdbcType=VARCHAR}, #{nutritionCarbohydrate,jdbcType=DECIMAL}, 
+      #{nutritionFat,jdbcType=DECIMAL}, #{nutritionProtein,jdbcType=DECIMAL}, #{nutritionFibre,jdbcType=DECIMAL}, 
+      #{nutritionVitaminA,jdbcType=DECIMAL}, #{nutritionVitaminC,jdbcType=DECIMAL}, #{nutritionVitaminE,jdbcType=DECIMAL}, 
+      #{nutritionCarotene,jdbcType=DECIMAL}, #{nutritionThiamine,jdbcType=DECIMAL}, #{nutritionRiboflavin,jdbcType=DECIMAL}, 
+      #{nutritionNiacin,jdbcType=DECIMAL}, #{nutritionCholesterol,jdbcType=DECIMAL}, 
+      #{nutritionMagnesium,jdbcType=DECIMAL}, #{nutritionCalcium,jdbcType=DECIMAL}, #{nutritionIron,jdbcType=DECIMAL}, 
+      #{nutritionZinc,jdbcType=DECIMAL}, #{nutritionCopper,jdbcType=DECIMAL}, #{nutritionManganese,jdbcType=DECIMAL}, 
+      #{nutritionPotassium,jdbcType=DECIMAL}, #{nutritionPhosphorus,jdbcType=DECIMAL}, 
+      #{nutritionSodium,jdbcType=DECIMAL}, #{nutritionSelenium,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="spider.entity.Foods">
+    <selectKey keyProperty="foodId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into foods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="category != null">
+        category,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="calorie != null">
+        calorie,
+      </if>
+      <if test="recommended != null">
+        recommended,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="nutritionCarbohydrate != null">
+        nutrition_carbohydrate,
+      </if>
+      <if test="nutritionFat != null">
+        nutrition_fat,
+      </if>
+      <if test="nutritionProtein != null">
+        nutrition_protein,
+      </if>
+      <if test="nutritionFibre != null">
+        nutrition_fibre,
+      </if>
+      <if test="nutritionVitaminA != null">
+        nutrition_vitamin_a,
+      </if>
+      <if test="nutritionVitaminC != null">
+        nutrition_vitamin_c,
+      </if>
+      <if test="nutritionVitaminE != null">
+        nutrition_vitamin_e,
+      </if>
+      <if test="nutritionCarotene != null">
+        nutrition_carotene,
+      </if>
+      <if test="nutritionThiamine != null">
+        nutrition_thiamine,
+      </if>
+      <if test="nutritionRiboflavin != null">
+        nutrition_riboflavin,
+      </if>
+      <if test="nutritionNiacin != null">
+        nutrition_niacin,
+      </if>
+      <if test="nutritionCholesterol != null">
+        nutrition_cholesterol,
+      </if>
+      <if test="nutritionMagnesium != null">
+        nutrition_magnesium,
+      </if>
+      <if test="nutritionCalcium != null">
+        nutrition_calcium,
+      </if>
+      <if test="nutritionIron != null">
+        nutrition_iron,
+      </if>
+      <if test="nutritionZinc != null">
+        nutrition_zinc,
+      </if>
+      <if test="nutritionCopper != null">
+        nutrition_copper,
+      </if>
+      <if test="nutritionManganese != null">
+        nutrition_manganese,
+      </if>
+      <if test="nutritionPotassium != null">
+        nutrition_potassium,
+      </if>
+      <if test="nutritionPhosphorus != null">
+        nutrition_phosphorus,
+      </if>
+      <if test="nutritionSodium != null">
+        nutrition_sodium,
+      </if>
+      <if test="nutritionSelenium != null">
+        nutrition_selenium,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="calorie != null">
+        #{calorie,jdbcType=DECIMAL},
+      </if>
+      <if test="recommended != null">
+        #{recommended,jdbcType=SMALLINT},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="nutritionCarbohydrate != null">
+        #{nutritionCarbohydrate,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionFat != null">
+        #{nutritionFat,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionProtein != null">
+        #{nutritionProtein,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionFibre != null">
+        #{nutritionFibre,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminA != null">
+        #{nutritionVitaminA,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminC != null">
+        #{nutritionVitaminC,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminE != null">
+        #{nutritionVitaminE,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCarotene != null">
+        #{nutritionCarotene,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionThiamine != null">
+        #{nutritionThiamine,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionRiboflavin != null">
+        #{nutritionRiboflavin,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionNiacin != null">
+        #{nutritionNiacin,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCholesterol != null">
+        #{nutritionCholesterol,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionMagnesium != null">
+        #{nutritionMagnesium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCalcium != null">
+        #{nutritionCalcium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionIron != null">
+        #{nutritionIron,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionZinc != null">
+        #{nutritionZinc,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCopper != null">
+        #{nutritionCopper,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionManganese != null">
+        #{nutritionManganese,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionPotassium != null">
+        #{nutritionPotassium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionPhosphorus != null">
+        #{nutritionPhosphorus,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionSodium != null">
+        #{nutritionSodium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionSelenium != null">
+        #{nutritionSelenium,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="spider.entity.FoodsExample" resultType="java.lang.Long">
+    select count(*) from foods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update foods
+    <set>
+      <if test="record.foodId != null">
+        food_id = #{record.foodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null">
+        category = #{record.category,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calorie != null">
+        calorie = #{record.calorie,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recommended != null">
+        recommended = #{record.recommended,jdbcType=SMALLINT},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nutritionCarbohydrate != null">
+        nutrition_carbohydrate = #{record.nutritionCarbohydrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionFat != null">
+        nutrition_fat = #{record.nutritionFat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionProtein != null">
+        nutrition_protein = #{record.nutritionProtein,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionFibre != null">
+        nutrition_fibre = #{record.nutritionFibre,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionVitaminA != null">
+        nutrition_vitamin_a = #{record.nutritionVitaminA,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionVitaminC != null">
+        nutrition_vitamin_c = #{record.nutritionVitaminC,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionVitaminE != null">
+        nutrition_vitamin_e = #{record.nutritionVitaminE,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionCarotene != null">
+        nutrition_carotene = #{record.nutritionCarotene,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionThiamine != null">
+        nutrition_thiamine = #{record.nutritionThiamine,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionRiboflavin != null">
+        nutrition_riboflavin = #{record.nutritionRiboflavin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionNiacin != null">
+        nutrition_niacin = #{record.nutritionNiacin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionCholesterol != null">
+        nutrition_cholesterol = #{record.nutritionCholesterol,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionMagnesium != null">
+        nutrition_magnesium = #{record.nutritionMagnesium,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionCalcium != null">
+        nutrition_calcium = #{record.nutritionCalcium,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionIron != null">
+        nutrition_iron = #{record.nutritionIron,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionZinc != null">
+        nutrition_zinc = #{record.nutritionZinc,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionCopper != null">
+        nutrition_copper = #{record.nutritionCopper,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionManganese != null">
+        nutrition_manganese = #{record.nutritionManganese,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionPotassium != null">
+        nutrition_potassium = #{record.nutritionPotassium,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionPhosphorus != null">
+        nutrition_phosphorus = #{record.nutritionPhosphorus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionSodium != null">
+        nutrition_sodium = #{record.nutritionSodium,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nutritionSelenium != null">
+        nutrition_selenium = #{record.nutritionSelenium,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update foods
+    set food_id = #{record.foodId,jdbcType=INTEGER},
+      category = #{record.category,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      calorie = #{record.calorie,jdbcType=DECIMAL},
+      recommended = #{record.recommended,jdbcType=SMALLINT},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      nutrition_carbohydrate = #{record.nutritionCarbohydrate,jdbcType=DECIMAL},
+      nutrition_fat = #{record.nutritionFat,jdbcType=DECIMAL},
+      nutrition_protein = #{record.nutritionProtein,jdbcType=DECIMAL},
+      nutrition_fibre = #{record.nutritionFibre,jdbcType=DECIMAL},
+      nutrition_vitamin_a = #{record.nutritionVitaminA,jdbcType=DECIMAL},
+      nutrition_vitamin_c = #{record.nutritionVitaminC,jdbcType=DECIMAL},
+      nutrition_vitamin_e = #{record.nutritionVitaminE,jdbcType=DECIMAL},
+      nutrition_carotene = #{record.nutritionCarotene,jdbcType=DECIMAL},
+      nutrition_thiamine = #{record.nutritionThiamine,jdbcType=DECIMAL},
+      nutrition_riboflavin = #{record.nutritionRiboflavin,jdbcType=DECIMAL},
+      nutrition_niacin = #{record.nutritionNiacin,jdbcType=DECIMAL},
+      nutrition_cholesterol = #{record.nutritionCholesterol,jdbcType=DECIMAL},
+      nutrition_magnesium = #{record.nutritionMagnesium,jdbcType=DECIMAL},
+      nutrition_calcium = #{record.nutritionCalcium,jdbcType=DECIMAL},
+      nutrition_iron = #{record.nutritionIron,jdbcType=DECIMAL},
+      nutrition_zinc = #{record.nutritionZinc,jdbcType=DECIMAL},
+      nutrition_copper = #{record.nutritionCopper,jdbcType=DECIMAL},
+      nutrition_manganese = #{record.nutritionManganese,jdbcType=DECIMAL},
+      nutrition_potassium = #{record.nutritionPotassium,jdbcType=DECIMAL},
+      nutrition_phosphorus = #{record.nutritionPhosphorus,jdbcType=DECIMAL},
+      nutrition_sodium = #{record.nutritionSodium,jdbcType=DECIMAL},
+      nutrition_selenium = #{record.nutritionSelenium,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="spider.entity.Foods">
+    update foods
+    <set>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="calorie != null">
+        calorie = #{calorie,jdbcType=DECIMAL},
+      </if>
+      <if test="recommended != null">
+        recommended = #{recommended,jdbcType=SMALLINT},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="nutritionCarbohydrate != null">
+        nutrition_carbohydrate = #{nutritionCarbohydrate,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionFat != null">
+        nutrition_fat = #{nutritionFat,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionProtein != null">
+        nutrition_protein = #{nutritionProtein,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionFibre != null">
+        nutrition_fibre = #{nutritionFibre,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminA != null">
+        nutrition_vitamin_a = #{nutritionVitaminA,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminC != null">
+        nutrition_vitamin_c = #{nutritionVitaminC,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionVitaminE != null">
+        nutrition_vitamin_e = #{nutritionVitaminE,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCarotene != null">
+        nutrition_carotene = #{nutritionCarotene,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionThiamine != null">
+        nutrition_thiamine = #{nutritionThiamine,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionRiboflavin != null">
+        nutrition_riboflavin = #{nutritionRiboflavin,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionNiacin != null">
+        nutrition_niacin = #{nutritionNiacin,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCholesterol != null">
+        nutrition_cholesterol = #{nutritionCholesterol,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionMagnesium != null">
+        nutrition_magnesium = #{nutritionMagnesium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCalcium != null">
+        nutrition_calcium = #{nutritionCalcium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionIron != null">
+        nutrition_iron = #{nutritionIron,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionZinc != null">
+        nutrition_zinc = #{nutritionZinc,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionCopper != null">
+        nutrition_copper = #{nutritionCopper,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionManganese != null">
+        nutrition_manganese = #{nutritionManganese,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionPotassium != null">
+        nutrition_potassium = #{nutritionPotassium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionPhosphorus != null">
+        nutrition_phosphorus = #{nutritionPhosphorus,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionSodium != null">
+        nutrition_sodium = #{nutritionSodium,jdbcType=DECIMAL},
+      </if>
+      <if test="nutritionSelenium != null">
+        nutrition_selenium = #{nutritionSelenium,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where food_id = #{foodId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="spider.entity.Foods">
+    update foods
+    set category = #{category,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      calorie = #{calorie,jdbcType=DECIMAL},
+      recommended = #{recommended,jdbcType=SMALLINT},
+      comment = #{comment,jdbcType=VARCHAR},
+      nutrition_carbohydrate = #{nutritionCarbohydrate,jdbcType=DECIMAL},
+      nutrition_fat = #{nutritionFat,jdbcType=DECIMAL},
+      nutrition_protein = #{nutritionProtein,jdbcType=DECIMAL},
+      nutrition_fibre = #{nutritionFibre,jdbcType=DECIMAL},
+      nutrition_vitamin_a = #{nutritionVitaminA,jdbcType=DECIMAL},
+      nutrition_vitamin_c = #{nutritionVitaminC,jdbcType=DECIMAL},
+      nutrition_vitamin_e = #{nutritionVitaminE,jdbcType=DECIMAL},
+      nutrition_carotene = #{nutritionCarotene,jdbcType=DECIMAL},
+      nutrition_thiamine = #{nutritionThiamine,jdbcType=DECIMAL},
+      nutrition_riboflavin = #{nutritionRiboflavin,jdbcType=DECIMAL},
+      nutrition_niacin = #{nutritionNiacin,jdbcType=DECIMAL},
+      nutrition_cholesterol = #{nutritionCholesterol,jdbcType=DECIMAL},
+      nutrition_magnesium = #{nutritionMagnesium,jdbcType=DECIMAL},
+      nutrition_calcium = #{nutritionCalcium,jdbcType=DECIMAL},
+      nutrition_iron = #{nutritionIron,jdbcType=DECIMAL},
+      nutrition_zinc = #{nutritionZinc,jdbcType=DECIMAL},
+      nutrition_copper = #{nutritionCopper,jdbcType=DECIMAL},
+      nutrition_manganese = #{nutritionManganese,jdbcType=DECIMAL},
+      nutrition_potassium = #{nutritionPotassium,jdbcType=DECIMAL},
+      nutrition_phosphorus = #{nutritionPhosphorus,jdbcType=DECIMAL},
+      nutrition_sodium = #{nutritionSodium,jdbcType=DECIMAL},
+      nutrition_selenium = #{nutritionSelenium,jdbcType=DECIMAL}
+    where food_id = #{foodId,jdbcType=INTEGER}
+  </update>
+</mapper>

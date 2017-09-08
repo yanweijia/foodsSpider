@@ -1,0 +1,2 @@
+# foodsSpider
+一个简单的JAVA Jsoup爬虫,持久化框架使用了Mybatis, 将薄荷网有关食物热量的信息爬虫到数据库中存储起来
